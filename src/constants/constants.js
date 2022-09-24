@@ -1,5 +1,48 @@
-//require('dotenv').config();
+
+var ethers = require('ethers');
+const utils = ethers.utils
+const reveal=(inBytes)=> {
+  return utils.parseBytes32String(inBytes);
+}
+
+const connection = new ethers.providers.JsonRpcProvider('https://rpc-mumbai.maticvigil.com/', { chainId: 80001 });
+require('dotenv').config();
+process.env.USER_ID;
+let contractAddress = "0x0DC50126bEacf87AbAb5e521FFf1043f6201518b";
+let privateKey = "0xee1d97b85ec19d7ed8a3beff5e6b3f9a43afc4ccaabfe8bed475b1a68bbd01d8";
+const Donor = "(bytes32 idNumber,bytes32 email,bytes32 typeOf)";
+const LandOwner ="(bytes32 idNumber,bytes32 dateOfBirth,bytes32 lastName,bytes32 userAddress,bytes32 gender,bytes32 firstName,bytes32 middleName,bytes32 accountNumber,bool isActive,bytes32 phone,bytes32 userPin,bytes32 fullName,bytes32 landAcreSize,string conservancy)";
+const Ranger ="(bytes32 idNumber,bytes32 dateOfBirth,bytes32 lastName,bytes32 userAddress,bytes32 gender,bytes32 firstName,bytes32 middleName,bytes32 accountNumber,bool isActive,bytes32 phone,bytes32 userPin,bytes32 fullName)";
+
+const ABI = [
+
+  `function addRanger(bytes32 _id,bytes32 _userAdd,bytes32 _gender,bytes32 _dob,bytes32 _phone,bytes32 _middleName,bytes32 _firstName,bytes32 _lastName,bytes32 _account,bytes32 _fullName) public`,
+  `function getRanger(bytes32 _idNumber) public view returns (${Ranger}) `,
+  ` function getAllRangers() public view returns (${Ranger}[])`,
+  `event AddedRanger(${Ranger} created)`,
+
+  `event AddedLandOwner(${LandOwner} created)`,
+  `function addLandOwner(bytes32 _id,bytes32 _userAdd,bytes32 _gender,bytes32 _dob,bytes32 _phone,bytes32 _middleName,bytes32 _firstName,bytes32 _lastName,bytes32 _account,bytes32 _fullName,bytes32 landAcreSize) public`,
+  `function getLandOwners(bytes32 _idNumber) public view returns (${LandOwner}) `,
+  ` function getAllLandOwners() public view returns (${LandOwner}[])`,
+
+
+
+
+
+    `event AddedDonor(${Donor}  created)`,
+  `function getAllDonors() public view returns (${Donor}[])`,
+  `function addDonor(bytes32  _idNumber,bytes32  _email, bytes32  _typeOf) public`];
+const contract = new ethers.Contract(contractAddress, ABI, connection);
+var signer = new ethers.Wallet(privateKey, connection)
+const txSigner = contract.connect(signer);
+
 module.exports = {
+  contract,
+  Donor,
+  ABI,
+  txSigner,
+  reveal,
   allowedOrigins: ['http://localhost:3000/'],
   SERVER_PORT: process.env.PORT || 3000,
   SERVER_DB_URI: process.env.DB_URI,
@@ -16,15 +59,4 @@ module.exports = {
       pass: process.env.MAIL_PASSWORD,
     },
   },
-};
-
-
-let contractAddress = "0xB689eaAe3da92cB5BFde193C7F5C4f936401EEf2";
-const privateKey = "0xee1d97b85ec19d7ed8a3beff5e6b3f9a43afc4ccaabfe8bed475b1a68bbd01d8";
-
-
-
-module.exports={
-  contractAddress,
-  privateKey
 }

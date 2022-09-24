@@ -29,6 +29,6 @@ database.on('error', (error) => {
 database.once('connected', () => {
     console.log('Database Connected');
 })
-const listener=app.listen(process.env.PORT||3000,()=>{
+const listener=app.listen(process.env.PORT||3001,()=>{
     console.log(" app is running on "+listener.address().port);
 })

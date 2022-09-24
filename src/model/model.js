@@ -1,12 +1,21 @@
 const mongoose = require('mongoose');
 
 
-const diamSchema = new mongoose.Schema({
+const landOwnerSchema = new mongoose.Schema({
 
-    email:{type:String},
-    password:{type:String},
-    image:String,
-    donor:String
+     idTag:String,
+    address:String,
+    gender:String,
+     dob:String,
+     phone:String,
+     middleName:String,
+     firstName:String,
+     lastName:String,
+    fullName:String,
+     accountNumber:String,
+    landSize:String,
+    leaseFee:String,
+     conservancy:String,
 
 
 
@@ -15,12 +24,14 @@ const diamSchema = new mongoose.Schema({
 
 
 
-const keeperSchema = new mongoose.Schema({
+const rangerSchema = new mongoose.Schema({
 
-    name:{type:String},
-    surname:{type:String},
+    firstName:{type:String},
+    lastName:{type:String},
     middleName:{type:String},
     address:String,
+    gender:String,
+    fullName:String,
     phoneNumber:String,
     accountNumber:String,
     salary:String,
@@ -30,12 +41,12 @@ const keeperSchema = new mongoose.Schema({
 
 });
 
-const   diamModel = mongoose.model('diamModel',diamSchema);
-const   keeperModel = mongoose.model('keeperModel',keeperSchema);
+const   landOwnerModel = mongoose.model('landOwnerModel',landOwnerSchema);
+const   rangerModel = mongoose.model('rangerModel',rangerSchema);
 
 
 module.exports = {
-    diamModel,
-    keeperModel
+    landOwnerModel,
+   rangerModel
 
 };
