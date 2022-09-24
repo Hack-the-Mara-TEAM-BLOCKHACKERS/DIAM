@@ -1,7 +1,6 @@
 {
   "name": "diam_api_sopa-ereto",
   "version": "1.0.0",
-  "description": "",
   "main": "src/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -11,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "nodejs-unique-numeric-id-generator": "^1.0.1",
     "body-parser": "^1.20.0",
     "cors": "^2.8.5",
     "crypto-js": "^4.1.1",
@@ -26,5 +26,6 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.19"
-  }
+  },
+  "description": ""
 }

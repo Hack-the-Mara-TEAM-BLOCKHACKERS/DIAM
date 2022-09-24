@@ -8,7 +8,7 @@ const reveal=(inBytes)=> {
 const connection = new ethers.providers.JsonRpcProvider('https://rpc-mumbai.maticvigil.com/', { chainId: 80001 });
 require('dotenv').config();
 process.env.USER_ID;
-let contractAddress = "0x0DC50126bEacf87AbAb5e521FFf1043f6201518b";
+let contractAddress = "0xd2128E7ca0507e4c726bad8c63261B71e1C20C91";
 let privateKey = "0xee1d97b85ec19d7ed8a3beff5e6b3f9a43afc4ccaabfe8bed475b1a68bbd01d8";
 const Donor = "(bytes32 idNumber,bytes32 email,bytes32 typeOf)";
 const LandOwner ="(bytes32 idNumber,bytes32 dateOfBirth,bytes32 lastName,bytes32 userAddress,bytes32 gender,bytes32 firstName,bytes32 middleName,bytes32 accountNumber,bool isActive,bytes32 phone,bytes32 userPin,bytes32 fullName,bytes32 landAcreSize,string conservancy)";
@@ -31,6 +31,7 @@ const ABI = [
 
 
     `event AddedDonor(${Donor}  created)`,
+    `function getDonor(bytes32 _idNumber) public view returns (${Donor}) `,
   `function getAllDonors() public view returns (${Donor}[])`,
   `function addDonor(bytes32  _idNumber,bytes32  _email, bytes32  _typeOf) public`];
 const contract = new ethers.Contract(contractAddress, ABI, connection);
@@ -40,6 +41,8 @@ const txSigner = contract.connect(signer);
 module.exports = {
   contract,
   Donor,
+  Ranger,
+  LandOwner,
   ABI,
   txSigner,
   reveal,

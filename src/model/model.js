@@ -2,20 +2,20 @@ const mongoose = require('mongoose');
 
 
 const landOwnerSchema = new mongoose.Schema({
-
-     idTag:String,
-    address:String,
-    gender:String,
-     dob:String,
-     phone:String,
-     middleName:String,
-     firstName:String,
-     lastName:String,
-    fullName:String,
-     accountNumber:String,
-    landSize:String,
-    leaseFee:String,
-     conservancy:String,
+    idNumber: String,
+    dateOfBirth: String,
+    lastName: String,
+    userAddress: String,
+    gender: String,
+    firstName: String,
+    middleName: String,
+    accountNumber: String,
+    isActive: Boolean,
+    phone: String,
+    userPin: String,
+    fullName: String,
+    acreSize: String,
+    conservancy: String,
 
 
 
@@ -25,28 +25,30 @@ const landOwnerSchema = new mongoose.Schema({
 
 
 const rangerSchema = new mongoose.Schema({
-
-    firstName:{type:String},
-    lastName:{type:String},
-    middleName:{type:String},
-    address:String,
-    gender:String,
-    fullName:String,
-    phoneNumber:String,
-    accountNumber:String,
-    salary:String,
+    idNumber: String,
+    dateOfBirth: String,
+    lastName: String,
+    userAddress: String,
+    gender: String,
+    firstName: String,
+    middleName: String,
+    accountNumber: String,
+    isActive: Boolean,
+    phone: String,
+    userPin: String,
+    fullName: String
 
 
 
 
 });
 
-const   landOwnerModel = mongoose.model('landOwnerModel',landOwnerSchema);
-const   rangerModel = mongoose.model('rangerModel',rangerSchema);
+const landOwnerModel = mongoose.model('landOwnerModel', landOwnerSchema);
+const rangerModel = mongoose.model('rangerModel', rangerSchema);
 
 
 module.exports = {
     landOwnerModel,
-   rangerModel
+    rangerModel
 
 };
