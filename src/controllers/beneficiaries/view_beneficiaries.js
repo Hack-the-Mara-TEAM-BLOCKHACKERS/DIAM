@@ -87,7 +87,7 @@ const viewAllLandOwners = async (req, res, next) => {
                 result['userPin'] = reveal(obj['userPin']).toString();
                 result['fullName'] = reveal(obj['fullName']).toString();
                 result['acreSize'] = reveal(obj['landAcreSize']).toString();
-                result['conservancy'] = obj['conservancy'].toString();
+                result['conservancy'] = reveal(obj['conservancy']).toString();
                 data.push(result)
 
 
@@ -112,21 +112,13 @@ const viewAllLandOwners = async (req, res, next) => {
 
 const oneLandOwner = async (req, res, next) => {
     var result = {
-        idNumber: '',
-        dateOfBirth: '',
-        lastName: '',
-        userAddress: '',
-        gender: '',
-        firstName: '',
-        middleName: '',
-        accountNumber: '',
-        isActive: true,
-        phone: ''
+       
     };
 
     try {
         let data = [];
-        var sendPromise = await contract.getAllRangers(req.body.id, req.body.firstName);
+        var id = utils.formatBytes32String(req.body.idTag);
+        var sendPromise = await contract.getLandOwner(id);
         const response = Promise.resolve(sendPromise)
         response.then(resp => {
 
@@ -134,32 +126,25 @@ const oneLandOwner = async (req, res, next) => {
                 //console.log( resp[i])
                 // convert array to th object
                 var obj = Object.assign({}, resp[i]);
-
                 var result = {
-                    idNumber: '',
-                    dateOfBirth: '',
-                    lastName: '',
-                    userAddress: '',
-                    gender: '',
-                    firstName: '',
-                    middleName: '',
-                    accountNumber: '',
-                    isActive: true,
-                    phone: ''
+                   
                 };
 
-
-                result['idNumber'] = obj['idNumber'].toString();
-                result['dateOfBirth'] = obj['dateOfBirth'].toString();
-                result['lastName'] = obj['lastName'];
-                result['userAddress'] = obj['userAddress']
-                result['gender'] = obj['gender'];
-                result['firstName'] = obj['firstName'];
-                result['middleName'] = obj['middleName'];
-                result['accountNumber'] = obj['accountNumber'].toString();
-                result['isActive'] = result['isActive'];
-                result['phone'] = obj['phone'].toString();
-                result['userPin'] = obj['userPin'].toString();
+                result['idNumber'] = reveal(obj['idNumber']).toString();
+                result['dateOfBirth'] = reveal(obj['dateOfBirth']).toString();
+                result['lastName'] = reveal(obj['lastName']);
+                result['userAddress'] = reveal(obj['userAddress']).toString();
+                result['gender'] = reveal(obj['gender']).toString();
+                result['firstName'] = reveal(obj['firstName']);
+                result['middleName'] = reveal(obj['middleName']).toString();
+                result['accountNumber'] = reveal(obj['accountNumber']).toString();
+                result['isActive'] =obj['isActive'];
+                result['phone'] = reveal(obj['phone']).toString();
+                result['userPin'] = reveal(obj['userPin']).toString();
+                result['fullName'] = reveal(obj['fullName']).toString();
+                result['acreSize'] = reveal(obj['landAcreSize']).toString();
+                result['conservancy'] = reveal(obj['conservancy']).toString();
+                result['leeaseFee'] = reveal(obj['leaseFee']).toString();
                 console.log(result)
 
                 //arr.push(result)
@@ -203,34 +188,25 @@ const oneRanger = async (req, res, next) => {
     };
 
     try {
-
-        var sendPromise = await contract.getRanger(req.body.idTag, req.body.firstName);
+        var id = utils.formatBytes32String(req.body.idTag);
+        var sendPromise = await contract.getRanger(id);
         const response = Promise.resolve(sendPromise)
         response.then(obj => {
             // console.log(obj)
-            var result = {
-                idNumber: '',
-                dateOfBirth: '',
-                lastName: '',
-                userAddress: '',
-                gender: '',
-                firstName: '',
-                middleName: '',
-                accountNumber: '',
-                isActive: true,
-                phone: ''
-            };
-            result['idNumber'] = obj['idNumber'].toString();
-            result['dateOfBirth'] = obj['dateOfBirth'].toString();
-            result['lastName'] = obj['lastName'];
-            result['userAddress'] = obj['userAddress']
-            result['gender'] = obj['gender'];
-            result['firstName'] = obj['firstName'];
-            result['middleName'] = obj['middleName'];
-            result['accountNumber'] = obj['accountNumber'].toString();
-            result['isActive'] = result['isActive'];
-            result['phone'] = obj['phone'].toString();
-            result['userPin'] = obj['userPin'].toString();
+            var result = {};
+          
+            result['idNumber'] = reveal(obj['idNumber']).toString();
+            result['dateOfBirth'] = reveal(obj['dateOfBirth']).toString();
+            result['lastName'] = reveal(obj['lastName']);
+            result['userAddress'] = reveal(obj['userAddress']).toString();
+            result['gender'] = reveal(obj['gender']).toString();
+            result['firstName'] = reveal(obj['firstName']);
+            result['middleName'] = reveal(obj['middleName']).toString();
+            result['accountNumber'] = reveal(obj['accountNumber']).toString();
+            result['isActive'] =obj['isActive'];
+            result['phone'] = reveal(obj['phone']).toString();
+            result['userPin'] = reveal(obj['userPin']).toString();
+            result['fullName'] = reveal(obj['fullName']).toString();
             console.log(result)
 
 
@@ -242,7 +218,11 @@ const oneRanger = async (req, res, next) => {
         });
 
     } catch (error) {
-
+        res.send({
+            status: "SE500",
+            error:error.reason,
+           
+        });
     }
 
 

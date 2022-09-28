@@ -123,45 +123,53 @@ const addLandOwner = (req, res, next) => {
 
     diamModel.landOwnerModel.findOne({ firstName: req.body.firstName.toUpperCase(), lastName: req.body.lastName.toUpperCase(), middleName: req.body.middleName.toUpperCase() }, (err, data) => {
         let cleanmiddleName = removeSpaces(req.body.middleName.toUpperCase());
-        if (!data) {
-            const newDiam = new diamModel.landOwnerModel({
-                firstName: req.body.firstName.toUpperCase(),
-                lastName: req.body.lastName.toUpperCase(),
-                middleName: cleanmiddleName,
-                fullName: `${req.body.firstName.toUpperCase()} ${cleanmiddleName} ${req.body.lastName.toUpperCase()}`,
-                userAddress: req.body.address,
-                phone: req.body.phoneNumber,
-                accountNumber: req.body.accountNumber,
-                leaseFee: req.body.leaseFee,
-                gender: req.body.gender,
-                acreSize: req.body.landSize,
-                dateOfBirth: req.body.dob,
-                conservancy: req.body.conservancy,
-                userPin: '',
-                idNumber: yourID,
-                isActive: false,
-            })
+        try {
+            if (!data) {
+                const newDiam = new diamModel.landOwnerModel({
+                    firstName: req.body.firstName.toUpperCase(),
+                    lastName: req.body.lastName.toUpperCase(),
+                    middleName: cleanmiddleName,
+                    fullName: `${req.body.firstName.toUpperCase()} ${cleanmiddleName} ${req.body.lastName.toUpperCase()}`,
+                    userAddress: req.body.address,
+                    phone: req.body.phoneNumber,
+                    accountNumber: req.body.accountNumber,
+                    leaseFee: req.body.leaseFee,
+                    gender: req.body.gender,
+                    acreSize: req.body.landSize,
+                    dateOfBirth: req.body.dob,
+                    conservancy: req.body.conservancy,
+                    userPin: '',
+                    idNumber: yourID,
+                    isActive: false,
+                });
 
-            newDiam.save((err, response) => {
+                newDiam.save((err, response) => {
+                    if (err) return res.json({
+                        Error: err
+                    });
+                    return res.json({
+                        status: "SE200",
+                        "data": response
+                    });
+
+                })
+            } else {
                 if (err) return res.json({
-                    Error: err
+                    Error: 'something went wrong $err'
                 });
                 return res.json({
-                    status: 200,
-                    "data": response
+                    status: "SE302",
+                    data: 'User already exist'
                 });
 
-            })
-        } else {
-            if (err) return res.json({
-                Error: 'something went wrong $err'
-            });
-            return res.json({
-                status: 302,
-                data: 'User already exist'
-            });
+            }
+        } catch (error) {
 
         }
+
+
+
+
     })
 }
 
